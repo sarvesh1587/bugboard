@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { format, formatDistanceToNowStrict } from 'date-fns';
 import { ArrowLeft, ArrowRight, Check, FileText, Paperclip, Pencil, Send, Trash2, Undo2, UploadCloud, X } from 'lucide-react';
-import api, { errMsg } from '../api/client';
+import api, { errMsg, fileUrl } from '../api/client';
 import useAsync from '../hooks/useAsync';
 import { useAuth } from '../context/AuthContext';
 import { Avatar, ErrorState, Modal, Person, Segmented, SkeletonRows, Spinner, StatusBadge, Severity, Priority } from '../components/ui';
@@ -318,11 +318,11 @@ export default function IssueDetail() {
               <div className="attachments">
                 {issue.attachments.map((a) => (
                   <div className="attachment" key={a._id}>
-                    <a href={a.url} target="_blank" rel="noreferrer" className="att-preview">
-                      {a.mimetype.startsWith('image/') ? <img src={a.url} alt={a.originalName} loading="lazy" /> : <FileText size={28} />}
+                    <a href={fileUrl(a.url)} target="_blank" rel="noreferrer" className="att-preview">
+                      {a.mimetype.startsWith('image/') ? <img src={fileUrl(a.url)} alt={a.originalName} loading="lazy" /> : <FileText size={28} />}
                     </a>
                     <div className="att-meta">
-                      <a href={a.url} target="_blank" rel="noreferrer" title={a.originalName}>{a.originalName}</a>
+                      <a href={fileUrl(a.url)} target="_blank" rel="noreferrer" title={a.originalName}>{a.originalName}</a>
                       <span className="mono muted">{kb(a.size)}</span>
                     </div>
                     {(user.role === 'admin' || a.uploadedBy?._id === user._id) && (

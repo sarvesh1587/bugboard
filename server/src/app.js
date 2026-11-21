@@ -7,6 +7,8 @@ const { clientUrl, nodeEnv } = require('./config/env');
 const { notFound, errorHandler } = require('./middleware/error');
 
 const app = express();
+// Behind Render/other proxies: use X-Forwarded-For for client IP (rate limiting)
+app.set('trust proxy', 1);
 
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({ origin: clientUrl.split(',').map((o) => o.trim()), credentials: true }));

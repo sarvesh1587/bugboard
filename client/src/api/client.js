@@ -8,7 +8,12 @@ export const tokenStore = {
   clear: () => localStorage.removeItem(TOKEN_KEY),
 };
 
-const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/api', timeout: 15000 });
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+const api = axios.create({ baseURL: API_URL, timeout: 15000 });
+
+// When the API is on another domain (e.g. Render), uploaded files live there too
+const FILE_ORIGIN = /^https?:\/\//.test(API_URL) ? new URL(API_URL).origin : '';
+export const fileUrl = (url = '') => (/^https?:\/\//.test(url) ? url : `${FILE_ORIGIN}${url}`);
 
 api.interceptors.request.use((config) => {
   const token = tokenStore.get();

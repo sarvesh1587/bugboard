@@ -43,9 +43,10 @@ A lightweight, Jira-style issue tracker built on the **MERN** stack. It covers p
 9. [Data model & indexing](#data-model--indexing)
 10. [Project structure](#project-structure)
 11. [Tests](#tests)
-12. [Docker](#docker)
-13. [Design decisions](#design-decisions)
-14. [Known limitations](#known-limitations)
+12. [Deployment](#deployment-render--vercel)
+13. [Docker](#docker)
+14. [Design decisions](#design-decisions)
+15. [Known limitations](#known-limitations)
 
 ---
 
@@ -366,6 +367,27 @@ MONGO_TEST_URI=mongodb://127.0.0.1:27017/bugboard_test npm test
 
 ---
 
+## Deployment (Render + Vercel)
+
+**Backend → Render** (Web Service)
+
+| Setting | Value |
+| --- | --- |
+| Root directory | `server` |
+| Build command | `npm install` |
+| Start command | `npm start` |
+| Env vars | `MONGO_URI`, `JWT_SECRET`, `NODE_ENV=production`, `CLIENT_URL=https://<your-app>.vercel.app` |
+
+**Frontend → Vercel**
+
+| Setting | Value |
+| --- | --- |
+| Root directory | `client` |
+| Framework preset | Vite (build `npm run build`, output `dist`) |
+| Env var | `VITE_API_URL=https://<your-api>.onrender.com/api` |
+
+`client/vercel.json` rewrites every route to `index.html`, so refreshing a page like `/issues/123` works. MongoDB Atlas must allow connections from Render (Network Access → `0.0.0.0/0`). Run `npm run seed` once against the Atlas URI to load demo data.
+
 ## Docker
 
 ```bash
@@ -389,7 +411,7 @@ Open http://localhost:8080. nginx serves the built client and proxies `/api` and
 
 ## Known limitations
 
-- Attachments are stored on the local disk (`server/uploads`). In production these should go to object storage (S3/Cloudinary).
+- Attachments are stored on the server's disk (`server/uploads`). On Render's free plan that disk is wiped on every restart/redeploy, so uploaded files disappear — production should use object storage (S3/Cloudinary). The free Render service also sleeps when idle, so the first request can take ~50 seconds.
 - Notifications use polling, not real-time push; there are no email notifications.
 - Search uses a case-insensitive regex on title and key. It is fine for this data size; a MongoDB text index or Atlas Search would be better for large datasets.
 - JWT is kept in `localStorage` for simplicity. An httpOnly refresh-token cookie would be safer against XSS.
