@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# build output
+client/dist/
+
+# uploaded attachments (keep the folder)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# logs & OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+coverage/

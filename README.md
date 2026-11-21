@@ -2,15 +2,31 @@
 
 A lightweight, Jira-style issue tracker built on the **MERN** stack. It covers projects, bug reporting, assignment, a status workflow enforced on the server, role-based permissions, comments, an activity history, in-app notifications and a drag-and-drop Kanban board.
 
-![Landing](docs/screenshots/landing.png)
+![Landing page — catch the bugs](docs/screenshots/landing.gif)
 
-| Dashboard | Board |
+### Demo
+
+**Drag-and-drop board** — columns a role can't drop into fade out; the server re-checks every move.
+
+![Kanban drag and drop](docs/screenshots/board-drag.gif)
+
+### Screenshots
+
+| Dashboard | Issues (table + filters) |
 | --- | --- |
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Board](docs/screenshots/board.png) |
-| **Issue detail** | **Issues (table + filters)** |
-| ![Issue](docs/screenshots/issue-detail.png) | ![Issues](docs/screenshots/issues.png) |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Issues](docs/screenshots/issues.png) |
+| **Kanban board** | **Issue detail — workflow, comments, history** |
+| ![Board](docs/screenshots/board.png) | ![Issue detail](docs/screenshots/issue-detail.png) |
+| **Report a bug** | **Projects (admin)** |
+| ![New issue](docs/screenshots/new-issue.png) | ![Projects](docs/screenshots/projects.png) |
+| **In-app notifications** | **Login with demo accounts** |
+| ![Notifications](docs/screenshots/notifications.png) | ![Login](docs/screenshots/login.png) |
+| **Roles** | **Static landing** |
+| ![Roles](docs/screenshots/roles.png) | ![Landing](docs/screenshots/landing.png) |
 
-Mobile views: [`docs/screenshots/mobile.png`](docs/screenshots/mobile.png)
+**Mobile**
+
+![Mobile views](docs/screenshots/mobile.png)
 
 ---
 
@@ -380,4 +396,3 @@ Open http://localhost:8080. nginx serves the built client and proxies `/api` and
 - No password reset / email verification flow.
 - The board loads up to 200 issues per view; very large projects would need per-column pagination.
 - Project keys can't be changed after creation (existing issue keys depend on them).
-"# bugboard" 
